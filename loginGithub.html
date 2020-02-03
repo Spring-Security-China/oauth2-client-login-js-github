@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</head>
+<body>
+<p>
+    <button onclick="handleLoginGithub()">使用Github登录</button>
+</p>
+</body>
+<script>
+    //触发github登录
+    function handleLoginGithub() {
+        var param = "?client_id=1994fe209a6970a75a26" +
+            "&redirect_uri=http://localhost:8080" +
+            "&scope=" +
+            "&state=" +
+            "&allow_signup=" +
+            "&login="
+
+        window.location.href = "https://github.com/login/oauth/authorize"+param
+    }
+
+    //回调地址接收code
+    //获取url中的参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+    if(getUrlParam("code")){
+        //如果参数中有code，说明是GitHub通过重定向传递code
+        //携带code请求token
+        var param = "?client_id=1994fe209a6970a75a26" +
+            "&client_secret=1c0de0b18501cfa419a250ebe855207ba6d2b6d7" +
+            "&redirect_uri=http://localhost:8080" +
+            "&state=" +
+            "&code="+getUrlParam("code");
+
+
+    }
+
+</script>
+
+</html>
